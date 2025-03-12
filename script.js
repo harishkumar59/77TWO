@@ -14,6 +14,7 @@ const sampleData = {
 
 // DOM Elements
 const splashScreen = document.getElementById('splash-screen');
+const mainContent = document.getElementById('main-content');
 const loginPage = document.getElementById('login-page');
 const app = document.getElementById('app');
 const loginForm = document.getElementById('login-form');
@@ -32,18 +33,59 @@ const tabContents = document.querySelectorAll('.tab-content');
 
 // Initialize Application
 document.addEventListener('DOMContentLoaded', () => {
-  // Hide splash screen after 2 seconds
+  // Hide splash screen after 2.5 seconds
   setTimeout(() => {
       splashScreen.style.animation = 'fadeOut 0.5s ease-in forwards';
       setTimeout(() => {
           splashScreen.style.display = 'none';
-          loginPage.style.animation = 'fadeIn 0.5s ease-in';
+          mainContent.style.display = 'block';
+          mainContent.style.animation = 'fadeIn 0.5s ease-in';
       }, 500);
-  }, 2000);
+  }, 2500);
 
   // Initialize tables with sample data
   initializeTables();
+  
+  // Add event listeners for main content buttons
+  setupMainContentListeners();
 });
+
+// Setup Main Content Event Listeners
+function setupMainContentListeners() {
+  const getStartedBtn = document.querySelector('.hero-buttons .btn-primary');
+  const exploreBtn = document.querySelector('.hero-buttons .btn-outline');
+  const scrollDownBtn = document.querySelector('.scroll-down-btn');
+  
+  if (getStartedBtn) {
+    getStartedBtn.addEventListener('click', () => {
+      mainContent.style.animation = 'fadeOut 0.5s ease-in forwards';
+      setTimeout(() => {
+        mainContent.style.display = 'none';
+        loginPage.style.display = 'block';
+        loginPage.style.animation = 'fadeIn 0.5s ease-in';
+      }, 500);
+    });
+  }
+  
+  if (exploreBtn) {
+    exploreBtn.addEventListener('click', () => {
+      // Scroll to features section or show more information
+      window.scrollTo({
+        top: window.innerHeight,
+        behavior: 'smooth'
+      });
+    });
+  }
+  
+  if (scrollDownBtn) {
+    scrollDownBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: window.innerHeight,
+        behavior: 'smooth'
+      });
+    });
+  }
+}
 
 // Login Form Handler
 loginForm.addEventListener('submit', (e) => {
