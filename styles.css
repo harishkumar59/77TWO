@@ -355,28 +355,14 @@ body {
   margin-bottom: 1.5rem;
 }
 
-.demo-users {
-  background-color: var(--background-light);
+.login-note {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: var(--green-color);
+  padding: 0.75rem;
   border-radius: 8px;
-  padding: 1.25rem;
-  margin-bottom: 1.5rem;
-}
-
-.demo-users h3 {
-  font-size: 1rem;
-  font-weight: 600;
-  margin-bottom: 0.75rem;
-  color: var(--text-color);
-}
-
-.demo-users ul {
-  list-style: none;
-}
-
-.demo-users li {
-  margin-bottom: 0.5rem;
   font-size: 0.9rem;
-  color: var(--text-light);
+  margin-bottom: 1.5rem;
+  text-align: center;
 }
 
 .back-to-home {

@@ -12,14 +12,6 @@ const sampleData = {
   ]
 };
 
-// Demo Users for Login
-const demoUsers = [
-  { username: 'admin', password: 'admin123', role: 'admin' },
-  { username: 'sales', password: 'sales123', role: 'salesman' },
-  { username: 'driver', password: 'driver123', role: 'driver' },
-  { username: 'worker', password: 'worker123', role: 'worker' }
-];
-
 // DOM Elements
 const splashScreen = document.getElementById('splash-screen');
 const mainContent = document.getElementById('main-content');
@@ -61,25 +53,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Setup learn more buttons
   setupLearnMoreButtons();
   
-  // Setup demo users display
-  setupDemoUsers();
-  
   // Setup back to home button
   setupBackToHomeButton();
 });
-
-// Setup Demo Users Display
-function setupDemoUsers() {
-  const demoUsersContainer = document.getElementById('demo-users');
-  if (demoUsersContainer) {
-    let html = '<h3>Demo Credentials</h3><ul>';
-    demoUsers.forEach(user => {
-      html += `<li><strong>${user.role}:</strong> ${user.username} / ${user.password}</li>`;
-    });
-    html += '</ul>';
-    demoUsersContainer.innerHTML = html;
-  }
-}
 
 // Setup Learn More Buttons
 function setupLearnMoreButtons() {
@@ -204,14 +180,6 @@ loginForm.addEventListener('submit', (e) => {
   if (!username || !password || !role) {
       alert('Please fill in all fields');
       return;
-  }
-
-  // Simple validation against demo users
-  const user = demoUsers.find(u => u.username === username && u.password === password && u.role === role);
-  
-  if (!user) {
-    alert('Invalid credentials. Please use one of the demo accounts.');
-    return;
   }
 
   // Hide login, show app
