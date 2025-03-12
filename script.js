@@ -18,6 +18,8 @@ const mainContent = document.getElementById('main-content');
 const loginPage = document.getElementById('login-page');
 const app = document.getElementById('app');
 const loginForm = document.getElementById('login-form');
+const registerForm = document.getElementById('register-form');
+const formTabs = document.querySelectorAll('.form-tab');
 const logoutBtn = document.getElementById('logout-btn');
 const userRoleDisplay = document.getElementById('user-role');
 const backToHomeBtn = document.getElementById('back-to-home-btn');
@@ -55,7 +57,33 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Setup back to home button
   setupBackToHomeButton();
+  
+  // Setup form tabs
+  setupFormTabs();
 });
+
+// Setup Form Tabs
+function setupFormTabs() {
+  formTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      // Remove active class from all tabs
+      formTabs.forEach(t => t.classList.remove('active'));
+      
+      // Add active class to clicked tab
+      tab.classList.add('active');
+      
+      // Show the corresponding form
+      const formType = tab.dataset.form;
+      if (formType === 'login') {
+        loginForm.style.display = 'block';
+        registerForm.style.display = 'none';
+      } else {
+        loginForm.style.display = 'none';
+        registerForm.style.display = 'block';
+      }
+    });
+  });
+}
 
 // Setup Learn More Buttons
 function setupLearnMoreButtons() {
@@ -203,6 +231,66 @@ loginForm.addEventListener('submit', (e) => {
           workerInterface.style.display = 'block';
           break;
   }
+});
+
+// Registration Form Handler
+registerForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const fullname = document.getElementById('reg-fullname').value;
+  const phone = document.getElementById('reg-phone').value;
+  const username = document.getElementById('reg-username').value;
+  const password = document.getElementById('reg-password').value;
+  const confirmPassword = document.getElementById('reg-confirm-password').value;
+  const role = document.getElementById('reg-role').value;
+  const termsAgreed = document.getElementById('terms').checked;
+
+  // Basic validation
+  if (!fullname || !phone || !username || !password || !confirmPassword || !role || !termsAgreed) {
+    alert('Please fill in all fields and agree to the terms');
+    return;
+  }
+
+  if (password !== confirmPassword) {
+    alert('Passwords do not match');
+    return;
+  }
+
+  // Phone number validation (simple 10-digit check)
+  if (!/^\d{10}$/.test(phone)) {
+    alert('Please enter a valid 10-digit phone number');
+    return;
+  }
+
+  // Show success message
+  const successMessage = document.createElement('div');
+  successMessage.className = 'registration-success';
+  successMessage.innerHTML = `
+    <i class="fas fa-check-circle"></i>
+    <p>Registration successful! You can now log in with your credentials.</p>
+  `;
+  
+  // Insert success message before the form
+  registerForm.parentNode.insertBefore(successMessage, registerForm);
+  
+  // Hide registration form
+  registerForm.style.display = 'none';
+  
+  // Show success message
+  successMessage.style.display = 'block';
+  
+  // Switch to login tab after 2 seconds
+  setTimeout(() => {
+    // Click the login tab
+    formTabs[0].click();
+    
+    // Remove success message
+    successMessage.remove();
+    
+    // Pre-fill login form with registration details
+    document.getElementById('username').value = username;
+    document.getElementById('password').value = password;
+    document.getElementById('role').value = role;
+  }, 2000);
 });
 
 // Logout Handler
