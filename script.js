@@ -55,6 +55,8 @@ function setupMainContentListeners() {
   const getStartedBtn = document.querySelector('.hero-buttons .btn-primary');
   const exploreBtn = document.querySelector('.hero-buttons .btn-outline');
   const scrollDownBtn = document.querySelector('.scroll-down-btn');
+  const arrowBtn = document.querySelector('.arrow-btn');
+  const learnMoreLinks = document.querySelectorAll('.learn-more');
   
   if (getStartedBtn) {
     getStartedBtn.addEventListener('click', () => {
@@ -69,22 +71,61 @@ function setupMainContentListeners() {
   
   if (exploreBtn) {
     exploreBtn.addEventListener('click', () => {
-      // Scroll to features section or show more information
-      window.scrollTo({
-        top: window.innerHeight,
-        behavior: 'smooth'
-      });
+      // Scroll to features section
+      const featuresSection = document.getElementById('features');
+      if (featuresSection) {
+        featuresSection.scrollIntoView({ behavior: 'smooth' });
+      }
     });
   }
   
   if (scrollDownBtn) {
     scrollDownBtn.addEventListener('click', () => {
+      // Scroll to features section
+      const featuresSection = document.getElementById('features');
+      if (featuresSection) {
+        featuresSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  }
+  
+  if (arrowBtn) {
+    arrowBtn.addEventListener('click', () => {
+      // Scroll to top of page
       window.scrollTo({
-        top: window.innerHeight,
+        top: 0,
         behavior: 'smooth'
       });
     });
+    
+    // Add hover effect for arrow button
+    arrowBtn.addEventListener('mouseenter', () => {
+      arrowBtn.style.transform = 'scale(1.1)';
+      arrowBtn.style.boxShadow = '0 0 15px rgba(37, 99, 235, 0.5)';
+    });
+    
+    arrowBtn.addEventListener('mouseleave', () => {
+      arrowBtn.style.transform = '';
+      arrowBtn.style.boxShadow = '';
+    });
   }
+  
+  // Add hover effect for learn more links
+  learnMoreLinks.forEach(link => {
+    link.addEventListener('mouseenter', () => {
+      const arrow = link.querySelector('.arrow-right');
+      if (arrow) {
+        arrow.style.transform = 'translateX(3px)';
+      }
+    });
+    
+    link.addEventListener('mouseleave', () => {
+      const arrow = link.querySelector('.arrow-right');
+      if (arrow) {
+        arrow.style.transform = '';
+      }
+    });
+  });
 }
 
 // Login Form Handler
