@@ -12,6 +12,14 @@ const sampleData = {
   ]
 };
 
+// Demo Users for Login
+const demoUsers = [
+  { username: 'admin', password: 'admin123', role: 'admin' },
+  { username: 'sales', password: 'sales123', role: 'salesman' },
+  { username: 'driver', password: 'driver123', role: 'driver' },
+  { username: 'worker', password: 'worker123', role: 'worker' }
+];
+
 // DOM Elements
 const splashScreen = document.getElementById('splash-screen');
 const mainContent = document.getElementById('main-content');
@@ -20,6 +28,7 @@ const app = document.getElementById('app');
 const loginForm = document.getElementById('login-form');
 const logoutBtn = document.getElementById('logout-btn');
 const userRoleDisplay = document.getElementById('user-role');
+const backToHomeBtn = document.getElementById('back-to-home-btn');
 
 // Interface Elements
 const adminInterface = document.getElementById('admin-interface');
@@ -48,7 +57,64 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Add event listeners for main content buttons
   setupMainContentListeners();
+  
+  // Setup learn more buttons
+  setupLearnMoreButtons();
+  
+  // Setup demo users display
+  setupDemoUsers();
+  
+  // Setup back to home button
+  setupBackToHomeButton();
 });
+
+// Setup Demo Users Display
+function setupDemoUsers() {
+  const demoUsersContainer = document.getElementById('demo-users');
+  if (demoUsersContainer) {
+    let html = '<h3>Demo Credentials</h3><ul>';
+    demoUsers.forEach(user => {
+      html += `<li><strong>${user.role}:</strong> ${user.username} / ${user.password}</li>`;
+    });
+    html += '</ul>';
+    demoUsersContainer.innerHTML = html;
+  }
+}
+
+// Setup Learn More Buttons
+function setupLearnMoreButtons() {
+  const learnMoreButtons = document.querySelectorAll('.learn-more');
+  
+  learnMoreButtons.forEach(button => {
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      
+      // Get the module name from the parent card
+      const card = button.closest('.feature-card');
+      const moduleName = card.querySelector('h3').textContent;
+      
+      // Transition to login page with the selected module
+      mainContent.style.animation = 'fadeOut 0.5s ease-in forwards';
+      setTimeout(() => {
+        mainContent.style.display = 'none';
+        loginPage.style.display = 'block';
+        loginPage.style.animation = 'fadeIn 0.5s ease-in';
+        
+        // Set the selected module
+        const selectedModuleElement = document.getElementById('selected-module');
+        if (selectedModuleElement) {
+          selectedModuleElement.textContent = moduleName;
+        }
+        
+        // Update login page title
+        const loginTitle = document.querySelector('.login-header h2');
+        if (loginTitle) {
+          loginTitle.innerHTML = `Login to <span class="highlight">${moduleName}</span>`;
+        }
+      }, 500);
+    });
+  });
+}
 
 // Setup Main Content Event Listeners
 function setupMainContentListeners() {
@@ -132,11 +198,20 @@ function setupMainContentListeners() {
 loginForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
   const role = document.getElementById('role').value;
 
-  if (!username || !role) {
+  if (!username || !password || !role) {
       alert('Please fill in all fields');
       return;
+  }
+
+  // Simple validation against demo users
+  const user = demoUsers.find(u => u.username === username && u.password === password && u.role === role);
+  
+  if (!user) {
+    alert('Invalid credentials. Please use one of the demo accounts.');
+    return;
   }
 
   // Hide login, show app
@@ -283,5 +358,22 @@ function viewOrderDetails(orderId) {
   const order = sampleData.orders.find(o => o.id === orderId);
   if (order) {
       alert(`Order Details:\nID: ${order.id}\nCustomer: ${order.customer}\nAmount: ₹${order.amount}\nStatus: ${order.status}\nDate: ${order.date}`);
+  }
+}
+
+// Setup Back to Home Button
+function setupBackToHomeButton() {
+  if (backToHomeBtn) {
+    backToHomeBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      
+      // Transition back to main content
+      loginPage.style.animation = 'fadeOut 0.5s ease-in forwards';
+      setTimeout(() => {
+        loginPage.style.display = 'none';
+        mainContent.style.display = 'block';
+        mainContent.style.animation = 'fadeIn 0.5s ease-in';
+      }, 500);
+    });
   }
 }
