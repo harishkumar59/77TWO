@@ -27,10 +27,6 @@
                     Streamlining operations across project management, retail, PG
                     accommodation, billing, and employee tracking.
                 </p>
-                <div class="hero-buttons">
-                    <button class="btn btn-primary">Get Started <span class="arrow-icon">→</span></button>
-                    <button class="btn btn-outline">Explore Features</button>
-                </div>
                 
                 <div class="feature-list">
                     <div class="feature-item">
@@ -404,25 +400,137 @@
 
                 <!-- Sales Management Tab -->
                 <div id="sales" class="tab-content">
-                    <div class="card">
-                        <h3>Sales Overview</h3>
-                        <div class="filter-controls">
-                            <button class="filter active" data-period="all">All Time</button>
-                            <button class="filter" data-period="month">This Month</button>
-                            <button class="filter" data-period="week">This Week</button>
+                    <div class="card" id="sales-management-section">
+                        <h3>Sales Management</h3>
+                        
+                        <!-- Order Filters -->
+                        <div class="filter-section">
+                            <h4>Order Filters</h4>
+                            <div class="filter-buttons">
+                                <button class="filter-btn active">All</button>
+                                <button class="filter-btn">This Month</button>
+                                <button class="filter-btn">Last 6 Months</button>
+                                <button class="filter-btn">Last Year</button>
+                            </div>
                         </div>
-                        <table class="data-table">
+                        
+                        <!-- Payment Filters -->
+                        <div class="filter-section">
+                            <div class="filter-buttons">
+                                <button class="filter-btn active">All Payments</button>
+                                <button class="filter-btn">Online Payments</button>
+                                <button class="filter-btn">Offline Payments</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Orders Table -->
+                        <table class="data-table sales-table">
                             <thead>
                                 <tr>
                                     <th>Order ID</th>
                                     <th>Customer</th>
                                     <th>Amount</th>
+                                    <th>Payment Method</th>
                                     <th>Status</th>
+                                    <th>Driver</th>
+                                    <th>Date</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="sales-table">
-                                <!-- Populated by JavaScript -->
+                                <tr>
+                                    <td>ORD001</td>
+                                    <td>John Smith</td>
+                                    <td>$150</td>
+                                    <td>online</td>
+                                    <td><span class="status-pending">pending</span></td>
+                                    <td>Unassigned</td>
+                                    <td>2023-01-15</td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm">Assign Driver</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ORD002</td>
+                                    <td>Jane Doe</td>
+                                    <td>$220</td>
+                                    <td>offline</td>
+                                    <td><span class="status-assigned">assigned</span></td>
+                                    <td>DRV001</td>
+                                    <td>2023-01-20</td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm">Assign Driver</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ORD003</td>
+                                    <td>Mike Johnson</td>
+                                    <td>$75</td>
+                                    <td>online</td>
+                                    <td><span class="status-delivered">delivered</span></td>
+                                    <td>DRV002</td>
+                                    <td>2023-01-25</td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm">Assign Driver</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ORD004</td>
+                                    <td>Lisa Brown</td>
+                                    <td>$320</td>
+                                    <td>online</td>
+                                    <td><span class="status-delivered">delivered</span></td>
+                                    <td>DRV001</td>
+                                    <td>2023-01-30</td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm">Assign Driver</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ORD005</td>
+                                    <td>David Wilson</td>
+                                    <td>$180</td>
+                                    <td>offline</td>
+                                    <td><span class="status-pending">pending</span></td>
+                                    <td>Unassigned</td>
+                                    <td>2023-02-05</td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm">Assign Driver</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Driver Performance Section -->
+                    <div class="card">
+                        <h3>Driver Performance</h3>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Driver</th>
+                                    <th>Orders Delivered</th>
+                                    <th>Average Rating</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Alex Driver</td>
+                                    <td>15</td>
+                                    <td>4.5</td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm">View Details</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Sam Tucker</td>
+                                    <td>8</td>
+                                    <td>3.8</td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm">View Details</button>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>

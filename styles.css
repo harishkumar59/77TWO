@@ -6,6 +6,10 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 :root {
   --primary-color: #2563eb;
   --primary-dark: #1d4ed8;
@@ -976,4 +980,90 @@ body {
 .registration-success p {
   font-size: 1rem;
   line-height: 1.5;
+}
+
+/* Filter Section Styles */
+.filter-section {
+  margin-bottom: 1.5rem;
+}
+
+.filter-section h4 {
+  font-size: 0.95rem;
+  color: var(--text-light);
+  margin-bottom: 0.75rem;
+}
+
+.filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.filter-btn {
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background: none;
+  font-size: 0.875rem;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-btn.active {
+  background-color: var(--primary-color);
+  color: white;
+  border-color: var(--primary-color);
+}
+
+.filter-btn:hover:not(.active) {
+  background-color: var(--background-light);
+}
+
+/* Sales Table Styles */
+.sales-table td {
+  vertical-align: middle;
+}
+
+.sales-table td:nth-child(4) {
+  text-transform: lowercase;
+}
+
+.sales-table td:nth-child(5) {
+  text-transform: lowercase;
+}
+
+/* Status Styling */
+.sales-table td:nth-child(5) {
+  font-weight: 500;
+}
+
+.status-pending {
+  color: var(--orange-color);
+}
+
+.status-delivered {
+  color: var(--success-color);
+}
+
+.status-assigned {
+  color: var(--blue-color);
+}
+
+/* Small Button Style */
+.btn-sm {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.875rem;
+}
+
+/* Sales Management Highlight */
+@keyframes highlightSection {
+  0% { box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1); }
+  50% { box-shadow: 0 0 15px rgba(37, 99, 235, 0.3); }
+  100% { box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1); }
+}
+
+.highlight-section {
+  animation: highlightSection 1.5s ease-in-out;
 }

@@ -60,6 +60,9 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // Setup form tabs
   setupFormTabs();
+  
+  // Setup sales filters
+  setupSalesFilters();
 });
 
 // Setup Form Tabs
@@ -310,7 +313,36 @@ navTabs.forEach(tab => {
       // Add active class to clicked tab and corresponding content
       tab.classList.add('active');
       const tabId = tab.dataset.tab;
-      document.getElementById(tabId).classList.add('active');
+      const tabContent = document.getElementById(tabId);
+      tabContent.classList.add('active');
+      
+      // If Sales Management tab is clicked, scroll to the section
+      if (tabId === 'sales') {
+        // Smooth scroll to the Sales Management section
+        setTimeout(() => {
+          const salesSection = document.getElementById('sales-management-section');
+          if (salesSection) {
+            // Remove any existing highlight animation
+            salesSection.classList.remove('highlight-section');
+            
+            // Scroll to the section
+            salesSection.scrollIntoView({ behavior: 'smooth' });
+            
+            // Further scroll to show the filter section at the top with header offset
+            setTimeout(() => {
+              window.scrollBy({
+                top: -80, // Adjust this value to account for header height
+                behavior: 'smooth'
+              });
+              
+              // Add highlight effect after scrolling
+              setTimeout(() => {
+                salesSection.classList.add('highlight-section');
+              }, 300);
+            }, 300);
+          }
+        }, 100);
+      }
   });
 });
 
@@ -432,4 +464,42 @@ function setupBackToHomeButton() {
       }, 500);
     });
   }
+}
+
+// Setup Sales Filters
+function setupSalesFilters() {
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  
+  filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      // Find all buttons in the same filter section
+      const filterSection = button.closest('.filter-section');
+      const sectionButtons = filterSection.querySelectorAll('.filter-btn');
+      
+      // Remove active class from all buttons in this section
+      sectionButtons.forEach(btn => btn.classList.remove('active'));
+      
+      // Add active class to clicked button
+      button.classList.add('active');
+      
+      // Here you would typically filter the data based on the selected filters
+      // For demo purposes, we're just toggling the active state
+    });
+  });
+  
+  // Setup driver assignment buttons
+  const assignDriverButtons = document.querySelectorAll('.sales-table .btn-primary');
+  assignDriverButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      const row = this.closest('tr');
+      const orderId = row.cells[0].textContent;
+      
+      // Show a simple prompt for demo purposes
+      const driverId = prompt(`Assign a driver to order ${orderId}. Enter driver ID:`);
+      if (driverId) {
+        row.cells[5].textContent = driverId;
+        row.cells[4].innerHTML = '<span class="status-assigned">assigned</span>';
+      }
+    });
+  });
 }
