@@ -5,10 +5,10 @@ const sampleData = {
       { id: 'ORD002', customer: 'Jane Smith', amount: 2300, status: 'Pending', date: '2024-03-14' },
       { id: 'ORD003', customer: 'Mike Johnson', amount: 1800, status: 'In Progress', date: '2024-03-13' }
   ],
-  workers: [
-      { id: 'WRK001', name: 'Amit Kumar', role: 'Worker', status: 'Active' },
-      { id: 'WRK002', name: 'Priya Sharma', role: 'Worker', status: 'Active' },
-      { id: 'WRK003', name: 'Raj Patel', role: 'Driver', status: 'On Delivery' }
+  drivers: [
+      { id: 'DRV001', name: 'Amit Kumar', status: 'Available' },
+      { id: 'DRV002', name: 'Priya Sharma', status: 'On Delivery' },
+      { id: 'DRV003', name: 'Raj Patel', status: 'Available' }
   ]
 };
 
@@ -362,22 +362,6 @@ function initializeTables() {
       `).join('');
   }
 
-  // Workers Table
-  const workersTable = document.getElementById('workers-table');
-  if (workersTable) {
-      workersTable.innerHTML = sampleData.workers.map(worker => `
-          <tr>
-              <td>${worker.id}</td>
-              <td>${worker.name}</td>
-              <td>${worker.role}</td>
-              <td>${worker.status}</td>
-              <td>
-                  <button class="btn btn-text" onclick="viewWorkerDetails('${worker.id}')">View</button>
-              </td>
-          </tr>
-      `).join('');
-  }
-
   // Sales Table
   const salesTable = document.getElementById('sales-table');
   if (salesTable) {
@@ -388,7 +372,7 @@ function initializeTables() {
               <td>₹${order.amount}</td>
               <td>${order.status}</td>
               <td>
-                  <button class="btn btn-text" onclick="viewOrderDetails('${order.id}')">View</button>
+                  <button class="btn btn-primary btn-sm assign-driver-btn" data-order-id="${order.id}">Assign Driver</button>
               </td>
           </tr>
       `).join('');
@@ -403,50 +387,108 @@ function hideAllInterfaces() {
   workerInterface.style.display = 'none';
 }
 
-// Worker Attendance System
-const checkInBtn = document.getElementById('check-in');
-const checkOutBtn = document.getElementById('check-out');
-const attendanceStatus = document.getElementById('attendance-status');
-const hoursWorked = document.getElementById('hours-worked');
-
-let checkInTime = null;
-
-if (checkInBtn) {
-  checkInBtn.addEventListener('click', () => {
-      checkInTime = new Date();
-      attendanceStatus.textContent = 'Checked In';
-      checkInBtn.disabled = true;
-      checkOutBtn.disabled = false;
+// Setup Sales Filters
+function setupSalesFilters() {
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  
+  filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const filterSection = button.closest('.filter-section');
+      const sectionButtons = filterSection.querySelectorAll('.filter-btn');
+      sectionButtons.forEach(btn => btn.classList.remove('active'));
+      button.classList.add('active');
+    });
+  });
+  
+  // Setup driver assignment buttons
+  const assignDriverButtons = document.querySelectorAll('.assign-driver-btn');
+  assignDriverButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      const row = this.closest('tr');
+      const orderId = row.cells[0].textContent;
+      
+      // Create and show the driver assignment modal
+      showDriverAssignmentModal(orderId);
+    });
   });
 }
 
-if (checkOutBtn) {
-  checkOutBtn.addEventListener('click', () => {
-      if (checkInTime) {
-          const checkOutTime = new Date();
-          const hours = Math.round((checkOutTime - checkInTime) / (1000 * 60 * 60) * 10) / 10;
-          hoursWorked.textContent = hours;
-          attendanceStatus.textContent = 'Checked Out';
-          checkInBtn.disabled = false;
-          checkOutBtn.disabled = true;
-          checkInTime = null;
-      }
-  });
+// Driver Assignment Modal
+function showDriverAssignmentModal(orderId) {
+  // Remove existing modal if any
+  const existingModal = document.querySelector('.driver-modal');
+  if (existingModal) {
+    existingModal.remove();
+  }
+
+  // Create modal HTML
+  const modalHTML = `
+    <div class="driver-modal">
+      <div class="driver-modal-content">
+        <h3>Assign Driver to Order ${orderId}</h3>
+        <div class="driver-list">
+          ${sampleData.drivers.map(driver => `
+            <div class="driver-item ${driver.status === 'Available' ? 'available' : 'busy'}">
+              <div class="driver-info">
+                <span class="driver-name">${driver.name}</span>
+                <span class="driver-status">${driver.status}</span>
+              </div>
+              <button class="btn btn-sm ${driver.status === 'Available' ? 'btn-primary' : 'btn-disabled'}" 
+                      ${driver.status !== 'Available' ? 'disabled' : ''}
+                      onclick="assignDriver('${orderId}', '${driver.id}')">
+                Select
+              </button>
+            </div>
+          `).join('')}
+        </div>
+        <button class="btn btn-text" onclick="closeDriverModal()">Cancel</button>
+      </div>
+    </div>
+  `;
+
+  // Add modal to body
+  document.body.insertAdjacentHTML('beforeend', modalHTML);
 }
 
-// View Details Functions
-function viewWorkerDetails(workerId) {
-  const worker = sampleData.workers.find(w => w.id === workerId);
-  if (worker) {
-      alert(`Worker Details:\nID: ${worker.id}\nName: ${worker.name}\nRole: ${worker.role}\nStatus: ${worker.status}`);
+// Assign Driver Function
+function assignDriver(orderId, driverId) {
+  const driver = sampleData.drivers.find(d => d.id === driverId);
+  if (driver) {
+    // Update the table row
+    const row = document.querySelector(`tr td:first-child:contains('${orderId}')`).parentElement;
+    row.cells[5].textContent = driver.name;
+    row.cells[4].innerHTML = '<span class="status-assigned">assigned</span>';
+    
+    // Update driver status
+    driver.status = 'On Delivery';
+    
+    // Close modal
+    closeDriverModal();
+    
+    // Show success message
+    showNotification(`Driver ${driver.name} assigned to order ${orderId}`, 'success');
   }
 }
 
-function viewOrderDetails(orderId) {
-  const order = sampleData.orders.find(o => o.id === orderId);
-  if (order) {
-      alert(`Order Details:\nID: ${order.id}\nCustomer: ${order.customer}\nAmount: ₹${order.amount}\nStatus: ${order.status}\nDate: ${order.date}`);
+// Close Driver Modal
+function closeDriverModal() {
+  const modal = document.querySelector('.driver-modal');
+  if (modal) {
+    modal.remove();
   }
+}
+
+// Show Notification
+function showNotification(message, type = 'success') {
+  const notification = document.createElement('div');
+  notification.className = `notification ${type}`;
+  notification.textContent = message;
+  
+  document.body.appendChild(notification);
+  
+  setTimeout(() => {
+    notification.remove();
+  }, 3000);
 }
 
 // Setup Back to Home Button
@@ -466,40 +508,46 @@ function setupBackToHomeButton() {
   }
 }
 
-// Setup Sales Filters
-function setupSalesFilters() {
-  const filterButtons = document.querySelectorAll('.filter-btn');
-  
-  filterButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      // Find all buttons in the same filter section
-      const filterSection = button.closest('.filter-section');
-      const sectionButtons = filterSection.querySelectorAll('.filter-btn');
-      
-      // Remove active class from all buttons in this section
-      sectionButtons.forEach(btn => btn.classList.remove('active'));
-      
-      // Add active class to clicked button
-      button.classList.add('active');
-      
-      // Here you would typically filter the data based on the selected filters
-      // For demo purposes, we're just toggling the active state
+// New Order Form Handler
+const newOrderForm = document.getElementById('new-order-form');
+if (newOrderForm) {
+    newOrderForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        
+        // Get form values
+        const customerName = document.getElementById('customer-name').value;
+        const customerAddress = document.getElementById('customer-address').value;
+        const orderItems = document.getElementById('order-items').value;
+        const orderAmount = document.getElementById('order-amount').value;
+        const paymentMethod = document.getElementById('payment-method').value;
+
+        // Create new order object
+        const newOrder = {
+            id: `ORD${String(Math.floor(Math.random() * 10000)).padStart(4, '0')}`,
+            customer: customerName,
+            amount: orderAmount,
+            paymentMethod: paymentMethod,
+            date: new Date().toISOString().split('T')[0]
+        };
+
+        // Add to orders table
+        const ordersTable = document.getElementById('salesman-orders');
+        if (ordersTable) {
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>${newOrder.id}</td>
+                <td>${newOrder.customer}</td>
+                <td>₹${newOrder.amount}</td>
+                <td>${newOrder.paymentMethod}</td>
+                <td>${newOrder.date}</td>
+            `;
+            ordersTable.insertBefore(newRow, ordersTable.firstChild);
+        }
+
+        // Show success notification
+        showNotification('Order submitted successfully', 'success');
+
+        // Reset form
+        newOrderForm.reset();
     });
-  });
-  
-  // Setup driver assignment buttons
-  const assignDriverButtons = document.querySelectorAll('.sales-table .btn-primary');
-  assignDriverButtons.forEach(button => {
-    button.addEventListener('click', function() {
-      const row = this.closest('tr');
-      const orderId = row.cells[0].textContent;
-      
-      // Show a simple prompt for demo purposes
-      const driverId = prompt(`Assign a driver to order ${orderId}. Enter driver ID:`);
-      if (driverId) {
-        row.cells[5].textContent = driverId;
-        row.cells[4].innerHTML = '<span class="status-assigned">assigned</span>';
-      }
-    });
-  });
 }

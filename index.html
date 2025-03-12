@@ -354,8 +354,7 @@
             <div class="container">
                 <nav class="nav-tabs">
                     <button class="nav-tab active" data-tab="dashboard">Dashboard</button>
-                    <button class="nav-tab" data-tab="sales">Sales Management</button>
-                    <button class="nav-tab" data-tab="workers">Worker Management</button>
+                    <button class="nav-tab" data-tab="sales">Retail Management</button>
                 </nav>
 
                 <!-- Dashboard Tab -->
@@ -398,10 +397,10 @@
                     </div>
                 </div>
 
-                <!-- Sales Management Tab -->
+                <!-- Retail Management Tab -->
                 <div id="sales" class="tab-content">
                     <div class="card" id="sales-management-section">
-                        <h3>Sales Management</h3>
+                        <h3>Retail Management</h3>
                         
                         <!-- Order Filters -->
                         <div class="filter-section">
@@ -441,13 +440,13 @@
                                 <tr>
                                     <td>ORD001</td>
                                     <td>John Smith</td>
-                                    <td>$150</td>
+                                    <td>₹150</td>
                                     <td>online</td>
                                     <td><span class="status-pending">pending</span></td>
                                     <td>Unassigned</td>
                                     <td>2023-01-15</td>
                                     <td>
-                                        <button class="btn btn-primary btn-sm">Assign Driver</button>
+                                        <button class="btn btn-primary btn-sm assign-driver-btn">Assign Driver</button>
                                     </td>
                                 </tr>
                                 <tr>
@@ -535,27 +534,6 @@
                         </table>
                     </div>
                 </div>
-
-                <!-- Worker Management Tab -->
-                <div id="workers" class="tab-content">
-                    <div class="card">
-                        <h3>Worker Overview</h3>
-                        <table class="data-table">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Role</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="workers-table">
-                                <!-- Populated by JavaScript -->
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -563,35 +541,88 @@
         <div id="salesman-interface" class="interface">
             <div class="container">
                 <div class="card">
-                    <h3>New Order</h3>
+                    <h3>Submit New Order</h3>
                     <form id="new-order-form">
                         <div class="form-group">
                             <label for="customer-name">Customer Name</label>
-                            <input type="text" id="customer-name" required>
+                            <input type="text" id="customer-name" placeholder="Enter customer name" required>
                         </div>
                         <div class="form-group">
-                            <label for="order-amount">Amount</label>
-                            <input type="number" id="order-amount" required>
+                            <label for="customer-address">Customer Address</label>
+                            <textarea id="customer-address" placeholder="Enter delivery address" rows="3" required></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Create Order</button>
+                        <div class="form-group">
+                            <label for="order-items">Order Items</label>
+                            <textarea id="order-items" placeholder="Item 1 x 2, Item 2 x 1, ..." rows="3" required></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="order-amount">Order Amount</label>
+                            <input type="number" id="order-amount" placeholder="Enter total amount" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="payment-method">Payment Method</label>
+                            <select id="payment-method" required>
+                                <option value="">Select Payment Method</option>
+                                <option value="online">Online</option>
+                                <option value="offline">Offline</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit Order</button>
                     </form>
                 </div>
 
                 <div class="card">
                     <h3>My Orders</h3>
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Order ID</th>
-                                <th>Customer</th>
-                                <th>Amount</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody id="salesman-orders">
-                            <!-- Populated by JavaScript -->
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="data-table orders-table">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Customer</th>
+                                    <th>Amount</th>
+                                    <th>Payment Method</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="salesman-orders">
+                                <tr>
+                                    <td>ORD001</td>
+                                    <td>John Smith</td>
+                                    <td>₹150</td>
+                                    <td>online</td>
+                                    <td>2023-01-15</td>
+                                </tr>
+                                <tr>
+                                    <td>ORD002</td>
+                                    <td>Jane Doe</td>
+                                    <td>₹220</td>
+                                    <td>offline</td>
+                                    <td>2023-01-20</td>
+                                </tr>
+                                <tr>
+                                    <td>ORD003</td>
+                                    <td>Mike Johnson</td>
+                                    <td>₹75</td>
+                                    <td>online</td>
+                                    <td>2023-01-25</td>
+                                </tr>
+                                <tr>
+                                    <td>ORD004</td>
+                                    <td>Lisa Brown</td>
+                                    <td>₹320</td>
+                                    <td>online</td>
+                                    <td>2023-01-30</td>
+                                </tr>
+                                <tr>
+                                    <td>ORD005</td>
+                                    <td>David Wilson</td>
+                                    <td>₹180</td>
+                                    <td>offline</td>
+                                    <td>2023-02-05</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
