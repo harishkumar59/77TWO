@@ -9,6 +9,7 @@
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
+
 html {
   scroll-behavior: smooth;
   height: 100%;
@@ -176,41 +177,63 @@ body {
 
 /* Hero Section */
 .hero-section {
+  background-image: url('https://www.adanirealty.com/-/media/project/realty/blogs/under-construction-projects_-pros-and-cons-of-buying-an-under-construction-property.ashx');
+  background-size: cover;
+  background-position: center;
+  position: relative;
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 2rem;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(37, 99, 235, 0.8) 0%, rgba(29, 78, 216, 0.7) 100%);
+  z-index: 1;
 }
 
 .hero-content {
   max-width: 800px;
   text-align: center;
+  position: relative;
+  z-index: 2;
 }
 
 .tag-pill {
   display: inline-block;
-  background-color: rgba(37, 99, 235, 0.1);
-  color: var(--primary-color);
+  background-color: rgba(255, 255, 255, 0.2);
+  color: white;
   padding: 0.5rem 1rem;
   border-radius: 9999px;
   font-size: 0.875rem;
   font-weight: 500;
   margin-bottom: 1.5rem;
+  backdrop-filter: blur(4px);
 }
 
 .hero-title {
   font-size: 3.5rem;
   font-weight: 700;
   margin-bottom: 1rem;
-  color: var(--primary-color);
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
 }
 
 .hero-subtitle {
   font-size: 1.25rem;
-  color: var(--text-light);
+  color: rgba(255, 255, 255, 0.9);
   max-width: 600px;
   margin: 0 auto 2rem;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .hero-buttons {
@@ -252,17 +275,52 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(4px);
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.feature-item:hover {
+  transform: translateY(-3px);
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+.feature-item:nth-child(1) {
+  background-color: rgba(37, 99, 235, 0.2);
+}
+
+.feature-item:nth-child(2) {
+  background-color: rgba(16, 185, 129, 0.2);
+}
+
+.feature-item:nth-child(3) {
+  background-color: rgba(139, 92, 246, 0.2);
+}
+
+.feature-item:nth-child(4) {
+  background-color: rgba(245, 158, 11, 0.2);
+}
+
+.feature-item:nth-child(5) {
+  background-color: rgba(239, 68, 68, 0.2);
+}
+
+.feature-item:nth-child(6) {
+  background-color: rgba(37, 99, 235, 0.2);
 }
 
 .feature-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
-  background-color: rgba(37, 99, 235, 0.1);
-  color: var(--primary-color);
+  width: 32px;
+  height: 32px;
+  background-color: rgba(255, 255, 255, 0.25);
+  color: white;
   border-radius: 50%;
+  flex-shrink: 0;
 }
 
 /* Scroll Indicator */
@@ -625,12 +683,13 @@ body {
 
 /* Cards */
 .card {
-  background-color: var(--background-white);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(243, 244, 246, 0.9) 100%);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
   padding: 1.5rem;
   margin-bottom: 1.5rem;
   transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  border-top: 4px solid var(--primary-color);
 }
 
 .card:hover {
@@ -818,16 +877,41 @@ body {
 }
 
 .feature-card {
-  background-color: white;
-  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(243, 244, 246, 0.9) 100%);
+  border-radius: var(--radius-lg);
   padding: 2rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-md);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-top: 4px solid transparent;
 }
 
 .feature-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-lg);
+}
+
+.feature-card:nth-child(1) {
+  border-top-color: var(--blue-color);
+}
+
+.feature-card:nth-child(2) {
+  border-top-color: var(--green-color);
+}
+
+.feature-card:nth-child(3) {
+  border-top-color: var(--purple-color);
+}
+
+.feature-card:nth-child(4) {
+  border-top-color: var(--orange-color);
+}
+
+.feature-card:nth-child(5) {
+  border-top-color: var(--red-color);
+}
+
+.feature-card:nth-child(6) {
+  border-top-color: var(--blue-color);
 }
 
 .card-icon {
