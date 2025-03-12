@@ -631,21 +631,86 @@
         <div id="driver-interface" class="interface">
             <div class="container">
                 <div class="card">
-                    <h3>Assigned Deliveries</h3>
-                    <table class="data-table">
-                        <thead>
-                            <tr>
-                                <th>Order ID</th>
-                                <th>Customer</th>
-                                <th>Location</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="driver-deliveries">
-                            <!-- Populated by JavaScript -->
-                        </tbody>
-                    </table>
+                    <h3>Assigned Orders</h3>
+                    <div class="table-responsive">
+                        <table class="data-table orders-table">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Customer</th>
+                                    <th>Address</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="driver-deliveries">
+                                <tr>
+                                    <td>ORD002</td>
+                                    <td>John Smith</td>
+                                    <td>123 Main St, City</td>
+                                    <td>₹150</td>
+                                    <td><span class="status-pending">pending</span></td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm">Update Status</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>ORD004</td>
+                                    <td>Jane Doe</td>
+                                    <td>456 Oak Ave, Town</td>
+                                    <td>₹320</td>
+                                    <td><span class="status-assigned">assigned</span></td>
+                                    <td>
+                                        <button class="btn btn-primary btn-sm">Update Status</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>My Performance</h3>
+                    <div class="rating-section">
+                        <div class="rating-header">
+                            <h4>My Rating</h4>
+                            <div class="rating-value">4.5</div>
+                        </div>
+                        <div class="rating-stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table feedback-table">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Rating</th>
+                                    <th>Feedback</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ORD002</td>
+                                    <td>5</td>
+                                    <td>Very prompt delivery</td>
+                                    <td>2023-01-22</td>
+                                </tr>
+                                <tr>
+                                    <td>ORD004</td>
+                                    <td>4</td>
+                                    <td>Good service</td>
+                                    <td>2023-01-31</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
